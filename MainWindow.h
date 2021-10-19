@@ -32,9 +32,11 @@ private:
 
     // Menu objects
     QMenu *fileMenu;
+    QMenu *editMenu;
     QMenu *selectMenu;
 
     // Menu actions
+    QAction *removeLastPlacedAction;
     QAction *selectAllAction;
     QAction *unselectAllAction;
     QAction *invertSelectionAction;

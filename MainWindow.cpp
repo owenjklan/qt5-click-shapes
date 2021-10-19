@@ -30,6 +30,7 @@ void MainWindow::setupMenusAndActions() {
     unselectAllAction->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_A));
 
     invertSelectionAction = new QAction(tr("&Invert"), this);
+    invertSelectionAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
 
     fileMenu = menuBar()->addMenu(tr("&File"));
     selectMenu = menuBar()->addMenu(tr("&Select"));
