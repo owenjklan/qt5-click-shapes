@@ -2,8 +2,11 @@
 // Created by owen on 13/10/21.
 //
 
+#include <QDebug>
 #include <QWidget>
+#include <QMouseEvent>
 #include <QVBoxLayout>
+
 #include "ClickShapeWidget.h"
 
 ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
@@ -29,10 +32,19 @@ void ClickShapeWidget::setupUiAndSignals(QWidget *parent) {
 
     setLayout(layout);
     setWindowTitle("Qt5 Click Shapes");
-
-    connect(canvas, SIGNAL(released()), this, SLOT(onCanvasClick()));
 }
 
-void ClickShapeWidget::onCanvasClick() {
+void ClickShapeWidget::mousePressEvent(QMouseEvent *event) {
+    QPointF screenPos = event->screenPos();
+    qDebug() << "(Global) Clicked at: " << event->globalX() << "," << event->globalY();
+    qDebug() << "(Local)  Clicked at: " << event->x() << "," << event->y();
+    qDebug() << "\033[33;1mscreenPos()\033[0m:         " << screenPos.x() << "," << screenPos.y();
+}
+
+void ClickShapeWidget::mouseMoveEvent(QMouseEvent *event) {
+
+}
+
+void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
 
 }
