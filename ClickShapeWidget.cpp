@@ -5,9 +5,12 @@
 #include <QDebug>
 #include <QWidget>
 #include <QPainter>
+#include <QShortcut>
+#include <QKeySequence>
 #include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QApplication>
+#include <QStyleOption>
 
 #include "ClickShapeWidget.h"
 #include "CustomObj.h"
@@ -17,7 +20,20 @@ ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
 {
     setMinimumWidth(640);
     setMinimumHeight(480);
-    setStyleSheet("color: #BEB69F;");
+
+    selectAllShortcut = new QShortcut(
+            QKeySequence(Qt::CTRL + Qt::Key_A),
+            this
+    );
+    unselectAllShortcut = new QShortcut(
+            QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_A),
+            this
+    );
+
+    connect(selectAllShortcut, SIGNAL(activated()),
+            this, SLOT(selectAll()));
+    connect(unselectAllShortcut, SIGNAL(activated()),
+            this, SLOT(unselectAll()));
 }
 
 // Points list manipulations
@@ -29,9 +45,12 @@ void ClickShapeWidget::addShape(QPoint at) {
 // END OF Points list manipulations
 
 void ClickShapeWidget::paintEvent(QPaintEvent *event) {
-    qDebug() << "paintEvent()";
+    QStyleOption opt;
+    opt.init(this);
 
     QPainter painter(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+
     painter.setBrush(Qt::SolidPattern);
     QPen pen;
 
@@ -173,4 +192,20 @@ void ClickShapeWidget::decreaseNewSize() {
     }
     QString updateMessage = QString("intial rect. dimensions changed:   %1, %2").arg(newWidth).arg(newHeight);
     qDebug() << updateMessage;
+}
+
+void ClickShapeWidget::selectAll() {
+    CustomObj *currentObj;
+    foreach(currentObj, placements) {
+        currentObj->selected = true;
+    }
+    update();
+}
+
+void ClickShapeWidget::unselectAll() {
+    CustomObj *currentObj;
+    foreach(currentObj, placements) {
+        currentObj->selected = false;
+    }
+    update();
 }

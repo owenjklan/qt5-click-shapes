@@ -5,6 +5,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QStyle>
 
 #include "ClickShapeWidget.h"
 
@@ -17,10 +18,12 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
-private:
-    void setupUiAndSignals(QWidget *parent);
+private slots:
     void refreshRequested();
 
+private:
+    void setupUiAndSignals(QWidget *parent);
+    QStyle *stylesheet;
     QPushButton *refreshButton;
     ClickShapeWidget *canvas;
 };

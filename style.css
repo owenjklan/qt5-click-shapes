@@ -1,0 +1,8 @@
+QPushButton {
+    background-color: red;
+}
+
+ClickShapeWidget {
+    background-color: #beb697;
+    border: 1px solid black;
+}

@@ -7,14 +7,20 @@
 #include "MainWindow.h"
 #include "ClickShapeWidget.h"
 
-MainWindow::MainWindow(QWidget *parent) {
+MainWindow::MainWindow(QWidget *parent) :
+        QWidget(parent) {
     setupUiAndSignals(parent);
+
+    QFile file("../style.css");
+    file.open(QFile::ReadOnly);
+    QString styleString = file.readAll();
+    setStyleSheet(styleString);
 }
 
 void MainWindow::setupUiAndSignals(QWidget *parent) {
     refreshButton = new QPushButton("&Refresh");
+    refreshButton->setMaximumWidth(150);
     canvas = new ClickShapeWidget(parent);
-    canvas->setStyleSheet("background-color: #BEB69F;");
 
     QVBoxLayout *layout = new QVBoxLayout();
 

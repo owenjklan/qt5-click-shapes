@@ -7,6 +7,7 @@
 #include <QBrush>
 #include <QWidget>
 #include <QPushButton>
+#include <QShortcut>
 
 #include "CustomObj.h"
 
@@ -33,6 +34,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private slots:
+    void selectAll();
+    void unselectAll();
 
 private:
     void increaseNewSize();
@@ -43,5 +46,10 @@ private:
 
     int newWidth = 96;
     int newHeight = 64;
+
+    QAction *selectAllAction;
+    QAction *unselectAllAction;
+    QShortcut *selectAllShortcut;
+    QShortcut *unselectAllShortcut;
 };
 #endif //QT5_CLICK_SHAPES_CLICKSHAPEWIDGET_H
