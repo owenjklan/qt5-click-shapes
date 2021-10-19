@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     file.open(QFile::ReadOnly);
     QString styleString = file.readAll();
     setStyleSheet(styleString);
+
 }
 
 void MainWindow::setupMenusAndActions() {
@@ -151,9 +152,17 @@ void MainWindow::redoPlacement(bool checked) {
 }
 
 void MainWindow::connectModeChecked(bool checked) {
+//    qDebug() << "connectModeChecked(checked=" << checked << ")";
     placeModeButton->setChecked(!checked);
+    if (checked == true) {
+        canvas->enableConnectMode();
+    }
 }
 
 void MainWindow::placeModeChecked(bool checked) {
+//    qDebug() << "placeModeChecked(checked=" << checked << ")";
     connectModeButton->setChecked(!checked);
+    if (checked == true) {
+        canvas->enablePlaceMode();
+    }
 }

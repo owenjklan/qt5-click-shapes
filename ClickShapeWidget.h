@@ -29,6 +29,8 @@ public:
     void clearShapes();
     void paintEvent(QPaintEvent *event) override;
     int redoCount();
+    void enableConnectMode();
+    void enablePlaceMode();
 
 public slots:
     void selectAll(bool checked = false);
@@ -49,6 +51,10 @@ private:
 
     QList<CustomObj *> placements;
     QStack<CustomObj *> redoList;
+
+#define CONNECT_MODE 0
+#define PLACE_MODE 1
+    int mode = CONNECT_MODE;
 
     int newWidth = 96;
     int newHeight = 64;

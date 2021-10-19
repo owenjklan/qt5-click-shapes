@@ -246,3 +246,11 @@ void ClickShapeWidget::addPlacementFromRedoList(bool checked) {
     placements.append(redoObject);
     update();
 }
+
+void ClickShapeWidget::enableConnectMode() {
+    qDebug() << "Connect mode enabeld";
+}
+
+void ClickShapeWidget::enablePlaceMode() {
+    qDebug() << "Place mode enabled";
+}
