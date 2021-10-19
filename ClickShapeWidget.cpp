@@ -4,6 +4,7 @@
 
 #include <QDebug>
 #include <QWidget>
+#include <QPainter>
 #include <QMouseEvent>
 #include <QVBoxLayout>
 
@@ -12,40 +13,36 @@
 ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
     QWidget(parent)
 {
-    setupUiAndSignals(parent);
+    setMinimumWidth(640);
+    setMinimumHeight(480);
+    setStyleSheet("color: #BEB69F;");
 }
 
-ClickShapeWidget::~ClickShapeWidget() noexcept {
-    ;
+// Points list manipulations
+void ClickShapeWidget::addShape(QPoint at) {
+    QRect *newRect = new QRect(at.x(), at.y(), newWidth, newHeight);
+    placements.append(newRect);
+    update();
 }
+// END OF Points list manipulations
 
-void ClickShapeWidget::setupPainter() {
-    qDebug() << "setupPainter()";
+void ClickShapeWidget::paintEvent(QPaintEvent *event) {
+    qDebug() << "paintEvent()";
+
+    QPainter painter(this);
+    painter.setBrush(Qt::SolidPattern);
+    QPen pen;
+
+    pen.setColor(Qt::green);
+    pen.setWidth(1);
+
+    painter.setPen(pen);
+
+    QRect *newRect;
+    foreach(newRect, placements) {
+        painter.drawRect(*newRect);
+    }
 }
-
-void ClickShapeWidget::paintShapes() {
-    qDebug() << "paintShapes()";
-}
-
-void ClickShapeWidget::setupUiAndSignals(QWidget *parent) {
-    button = new QPushButton("Press me!");
-    canvas = new QWidget();
-    canvas->setMinimumWidth(640);
-    canvas->setMinimumHeight(480);
-
-    canvas->setStyleSheet("background-color: #BEB69F;");
-
-    QVBoxLayout *layout = new QVBoxLayout();
-
-    layout->addWidget(button);
-    layout->addWidget(canvas);
-
-    setLayout(layout);
-    setWindowTitle("Qt5 Click Shapes");
-}
-
-#define RED "\033[33;1m"
-#define NORMAL "\033[0m"
 
 void ClickShapeWidget::mousePressEvent(QMouseEvent *event) {
     QString outputStr = QString("%1,%2").arg(event->x()).arg(event->y());
@@ -55,27 +52,27 @@ void ClickShapeWidget::mousePressEvent(QMouseEvent *event) {
 
     switch (event->button()) {
         case Qt::LeftButton: {
-            qDebug() << " Left Down @ " << outputStr;
+//            qDebug() << " Left Down @ " << outputStr;
             break;
         }
         case Qt::MidButton: {
-            qDebug() << "  Mid Down @ " << outputStr;
+//            qDebug() << "  Mid Down @ " << outputStr;
             break;
         }
         case Qt::RightButton: {
-            qDebug() << "Right Down @ " << outputStr;
+//            qDebug() << "Right Down @ " << outputStr;
             break;
         }
         case Qt::XButton1: {
-            qDebug() << "   X1 Down @ " << outputStr;
+//            qDebug() << "   X1 Down @ " << outputStr;
             break;
         }
         case Qt::XButton2: {
-            qDebug() << "   X2 Down @ " << outputStr;
+//            qDebug() << "   X2 Down @ " << outputStr;
             break;
         }
         default: {
-            qDebug() << "Unknown button!" << outputStr;
+//            qDebug() << "Unknown Button!" << outputStr;
         }
     }
 }
@@ -89,7 +86,8 @@ void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
 
     switch (event->button()) {
         case Qt::LeftButton: {
-            qDebug() << " Left Up   @ " << outputStr;
+            qDebug() << "Adding point  @ " << outputStr;
+            addShape(QPoint(event->x(), event->y()));
             break;
         }
         case Qt::MidButton: {
@@ -101,19 +99,51 @@ void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
             break;
         }
         case Qt::XButton1: {
-            qDebug() << "   X1 Up   @ " << outputStr;
+            decreaseNewSize();
             break;
         }
         case Qt::XButton2: {
-            qDebug() << "   X2 Up   @ " << outputStr;
+            increaseNewSize();
             break;
         }
         default: {
-            qDebug() << "Unknown button!";
+            qDebug() << "Unknown Button!";
         }
     }
 }
 
-void ClickShapeWidget::addShape(QPoint at) {
-    placements.append(at);
+void ClickShapeWidget::increaseNewSize() {
+    qint32 _width = newWidth << 1;
+    qint32 _height = newHeight << 1;
+    if (_width > MAX_RECT_WIDTH) {
+        newWidth = MAX_RECT_WIDTH;
+    } else {
+        newWidth = _width;
+    }
+
+    if (_height > MAX_RECT_HEIGHT) {
+        newHeight = MAX_RECT_HEIGHT;
+    } else {
+        newHeight = _height;
+    }
+    QString updateMessage = QString("intial rect. dimensions changed:   %1, %2").arg(newWidth).arg(newHeight);
+    qDebug() << updateMessage;
+}
+
+void ClickShapeWidget::decreaseNewSize() {
+    qint32 _width = newWidth >> 1;
+    qint32 _height = newHeight >> 1;
+    if (_width < MIN_RECT_WIDTH) {
+        newWidth = MIN_RECT_WIDTH;
+    } else {
+        newWidth = _width;
+    }
+
+    if (_height < MIN_RECT_HEIGHT) {
+        newHeight = MIN_RECT_HEIGHT;
+    } else {
+        newHeight = _height;
+    }
+    QString updateMessage = QString("intial rect. dimensions changed:   %1, %2").arg(newWidth).arg(newHeight);
+    qDebug() << updateMessage;
 }

@@ -9,13 +9,23 @@
 #include <QWidget>
 #include <QPushButton>
 
+
+#define RED "\033[33;1m"
+#define NORMAL "\033[0m"
+
+#define MIN_RECT_WIDTH 48
+#define MIN_RECT_HEIGHT 32
+#define MAX_RECT_WIDTH 192
+#define MAX_RECT_HEIGHT 128
+
 class ClickShapeWidget : public QWidget {
     Q_OBJECT
 
 public:
     explicit ClickShapeWidget(QWidget *parent = nullptr);
-    ~ClickShapeWidget();
     void addShape(QPoint at);
+
+    void paintEvent(QPaintEvent *event) override;
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -25,17 +35,12 @@ protected:
 private slots:
 
 private:
-    void setupUiAndSignals(QWidget *parent);
-    void setupPainter();
-    void paintShapes();
+    void increaseNewSize();
+    void decreaseNewSize();
 
-    QList<QPoint> placements;
+    QList<QRect *> placements;
 
-    QPushButton *button;
-    QWidget *canvas;
-    QPoint lastClickPoint;
-
-    QPen paintPen;
-    QBrush paintBrush;
+    int newWidth = 96;
+    int newHeight = 64;
 };
 #endif //QT5_CLICK_SHAPES_CLICKSHAPEWIDGET_H
