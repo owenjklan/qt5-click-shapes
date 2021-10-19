@@ -34,11 +34,40 @@ void ClickShapeWidget::setupUiAndSignals(QWidget *parent) {
     setWindowTitle("Qt5 Click Shapes");
 }
 
+#define RED "\033[33;1m"
+#define NORMAL "\033[0m"
+
 void ClickShapeWidget::mousePressEvent(QMouseEvent *event) {
     QPointF screenPos = event->screenPos();
-    qDebug() << "(Global) Clicked at: " << event->globalX() << "," << event->globalY();
-    qDebug() << "(Local)  Clicked at: " << event->x() << "," << event->y();
-    qDebug() << "\033[33;1mscreenPos()\033[0m:         " << screenPos.x() << "," << screenPos.y();
+    qDebug() << RED << "(Global) Clicked at:" << NORMAL << event->globalX() << "," << event->globalY();
+    qDebug() << RED << "(Local)  Clicked at:" << NORMAL << event->x() << "," << event->y();
+    qDebug() << RED << "screenPos()        :" << NORMAL << screenPos.x() << "," << screenPos.y();
+
+    switch (event->button()) {
+        case Qt::LeftButton: {
+            qDebug() << "Left Down";
+            break;
+        }
+        case Qt::MidButton: {
+            qDebug() << "Mid Down";
+            break;
+        }
+        case Qt::RightButton: {
+            qDebug() << "Right Down";
+            break;
+        }
+        case Qt::XButton1: {
+            qDebug() << "X1 Down";
+            break;
+        }
+        case Qt::XButton2: {
+            qDebug() << "X2 Down";
+            break;
+        }
+        default: {
+            qDebug() << "Unknown button!";
+        }
+    }
 }
 
 void ClickShapeWidget::mouseMoveEvent(QMouseEvent *event) {
@@ -46,5 +75,29 @@ void ClickShapeWidget::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
-
+    switch (event->button()) {
+        case Qt::LeftButton: {
+            qDebug() << "Left Up";
+            break;
+        }
+        case Qt::MidButton: {
+            qDebug() << "Mid Up";
+            break;
+        }
+        case Qt::RightButton: {
+            qDebug() << "Right Up";
+            break;
+        }
+        case Qt::XButton1: {
+            qDebug() << "X1 Up";
+            break;
+        }
+        case Qt::XButton2: {
+            qDebug() << "X2 Up";
+            break;
+        }
+        default: {
+            qDebug() << "Unknown button!";
+        }
+    }
 }
