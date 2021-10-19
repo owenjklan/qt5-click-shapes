@@ -72,11 +72,36 @@ void MainWindow::setupUiAndSignals(QWidget *parent) {
     clearButton->setMaximumWidth(150);
     canvas = new ClickShapeWidget(parent);
 
-    QVBoxLayout *layout = new QVBoxLayout();
+    modeSelectGroup = new QGroupBox(tr("Mode Select"));
+    modeSelectGroup->setCheckable(true);
+    connectModeButton = new QPushButton("Connect");
+    connectModeButton->setToolTip("Change to 'Connect' mode");
+    connectModeButton->setToolTipDuration(2000);
+    connectModeButton->setCheckable(true);
+    connectModeButton->setChecked(true);
+    connectModeButton->setMaximumWidth(75);
 
-    layout->addWidget(clearButton);
-    layout->addWidget(canvas);
-    containerWidget->setLayout(layout);
+    placeModeButton = new QPushButton("Place");
+    placeModeButton->setToolTip("Change to 'Place' mode");
+    placeModeButton->setToolTipDuration(2000);
+    placeModeButton->setCheckable(true);
+    placeModeButton->setChecked(false);
+    placeModeButton->setMaximumWidth(75);
+
+    QHBoxLayout *modeButtonsLayout = new QHBoxLayout();
+    modeButtonsLayout->addWidget(connectModeButton);
+    modeButtonsLayout->addWidget(placeModeButton);
+    modeSelectGroup->setLayout(modeButtonsLayout);
+
+    QVBoxLayout *vertLayout = new QVBoxLayout();
+    QHBoxLayout *menuHLayout = new QHBoxLayout();
+
+    menuHLayout->addWidget(clearButton);
+    menuHLayout->addStretch();
+    menuHLayout->addWidget(modeSelectGroup);
+    vertLayout->addLayout(menuHLayout);
+    vertLayout->addWidget(canvas);
+    containerWidget->setLayout(vertLayout);
     setCentralWidget(containerWidget);
     setWindowTitle("Qt5 Click Shapes");
 

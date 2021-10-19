@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QStyle>
 #include <QMainWindow>
+#include <QGroupBox>
 
 #include "ClickShapeWidget.h"
 
@@ -31,6 +32,10 @@ private:
     QWidget *containerWidget;
     QPushButton *clearButton;
     ClickShapeWidget *canvas;
+    QGroupBox *modeSelectGroup;
+    QPushButton *placeModeButton;
+    QPushButton *connectModeButton;
+
 
     // Menu objects
     QMenu *fileMenu;
