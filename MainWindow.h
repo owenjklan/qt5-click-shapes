@@ -24,10 +24,13 @@ private slots:
     void clearAllObjects();
     void undoPlacement(bool checked = false);
     void redoPlacement(bool checked = false);
+    void connectModeChecked(bool checked = true);
+    void placeModeChecked(bool checked = true);
 
 private:
     void setupUiAndSignals(QWidget *parent);
     void setupMenusAndActions();
+    void setupModeSelectGroup();
 
     QWidget *containerWidget;
     QPushButton *clearButton;

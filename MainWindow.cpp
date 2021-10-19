@@ -66,12 +66,7 @@ void MainWindow::setupMenusAndActions() {
             this, SLOT(redoPlacement(bool)));
 }
 
-void MainWindow::setupUiAndSignals(QWidget *parent) {
-    containerWidget = new QWidget(parent);
-    clearButton = new QPushButton("&Clear");
-    clearButton->setMaximumWidth(150);
-    canvas = new ClickShapeWidget(parent);
-
+void MainWindow::setupModeSelectGroup() {
     modeSelectGroup = new QGroupBox(tr("Mode Select"));
     modeSelectGroup->setCheckable(true);
     connectModeButton = new QPushButton("Connect");
@@ -92,6 +87,20 @@ void MainWindow::setupUiAndSignals(QWidget *parent) {
     modeButtonsLayout->addWidget(connectModeButton);
     modeButtonsLayout->addWidget(placeModeButton);
     modeSelectGroup->setLayout(modeButtonsLayout);
+
+    connect(connectModeButton, SIGNAL(toggled(bool)),
+            this, SLOT(connectModeChecked(bool)));
+    connect(placeModeButton, SIGNAL(toggled(bool)),
+            this, SLOT(placeModeChecked(bool)));
+}
+
+void MainWindow::setupUiAndSignals(QWidget *parent) {
+    containerWidget = new QWidget(parent);
+    clearButton = new QPushButton("&Clear");
+    clearButton->setMaximumWidth(150);
+    canvas = new ClickShapeWidget(parent);
+
+    setupModeSelectGroup();
 
     QVBoxLayout *vertLayout = new QVBoxLayout();
     QHBoxLayout *menuHLayout = new QHBoxLayout();
@@ -132,7 +141,6 @@ void MainWindow::undoPlacement(bool checked) {
     editMenu->update();
 }
 
-
 void MainWindow::redoPlacement(bool checked) {
     qDebug() << "Updating 'redo count' in menus...";
     canvas->addPlacementFromRedoList(checked);
@@ -140,4 +148,12 @@ void MainWindow::redoPlacement(bool checked) {
     redoPlacementAction->setText(QString("&Redo Placement (%1)").arg(canvas->redoCount()));
     canvas->update();
     editMenu->update();
+}
+
+void MainWindow::connectModeChecked(bool checked) {
+    placeModeButton->setChecked(!checked);
+}
+
+void MainWindow::placeModeChecked(bool checked) {
+    connectModeButton->setChecked(!checked);
 }
