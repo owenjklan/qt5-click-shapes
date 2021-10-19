@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 
 #include "ClickShapeWidget.h"
+#include "CustomObj.h"
 
 ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
     QWidget(parent)
@@ -20,9 +21,9 @@ ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
 
 // Points list manipulations
 void ClickShapeWidget::addShape(QPoint at) {
-    QRect *newRect = new QRect(at.x(), at.y(), newWidth, newHeight);
-    placements.append(newRect);
-    update();
+    QRect *objBounds = new QRect(at.x(), at.y(), newWidth, newHeight);
+    CustomObj *newObj = new CustomObj(new QString("Foobar"), objBounds);
+    placements.append(newObj);
 }
 // END OF Points list manipulations
 
@@ -38,41 +39,41 @@ void ClickShapeWidget::paintEvent(QPaintEvent *event) {
 
     painter.setPen(pen);
 
-    QRect *newRect;
-    foreach(newRect, placements) {
-        painter.drawRect(*newRect);
+    CustomObj *currentObj;
+    foreach(currentObj, placements) {
+        if (currentObj->selected) {
+            pen.setColor(Qt::red);
+            pen.setWidth(2);
+        } else {
+            pen.setColor(Qt::green);
+            pen.setWidth(1);
+        }
+        painter.setPen(pen);
+        painter.drawRect(*currentObj->rect);
     }
 }
 
 void ClickShapeWidget::mousePressEvent(QMouseEvent *event) {
     QString outputStr = QString("%1,%2").arg(event->x()).arg(event->y());
 
-//    qDebug() << RED << "(Global) Clicked at:" << NORMAL << event->globalX() << "," << event->globalY();
-//    qDebug() << RED << "(Local)  Clicked at:" << NORMAL << event->x() << "," << event->y();
-
     switch (event->button()) {
         case Qt::LeftButton: {
-//            qDebug() << " Left Down @ " << outputStr;
             break;
         }
         case Qt::MidButton: {
-//            qDebug() << "  Mid Down @ " << outputStr;
             break;
         }
         case Qt::RightButton: {
-//            qDebug() << "Right Down @ " << outputStr;
             break;
         }
         case Qt::XButton1: {
-//            qDebug() << "   X1 Down @ " << outputStr;
             break;
         }
         case Qt::XButton2: {
-//            qDebug() << "   X2 Down @ " << outputStr;
             break;
         }
         default: {
-//            qDebug() << "Unknown Button!" << outputStr;
+            qDebug() << "Unknown Button!" << outputStr;
         }
     }
 }
@@ -95,7 +96,16 @@ void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
             break;
         }
         case Qt::RightButton: {
-            qDebug() << "Right Up   @ " << outputStr;
+            CustomObj *selectedObj = findSelectedObj(event->pos());
+            if (selectedObj == nullptr) {
+                break;
+            }
+            QString debugMessage = QString("Selected Rect @ %1, %2 (%3x%4)")\
+                .arg(selectedObj->rect->x())\
+                .arg(selectedObj->rect->y())\
+                .arg(selectedObj->rect->width())\
+                .arg(selectedObj->rect->height());
+            qDebug() << debugMessage;
             break;
         }
         case Qt::XButton1: {
@@ -110,6 +120,18 @@ void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
             qDebug() << "Unknown Button!";
         }
     }
+    update();
+}
+
+CustomObj * ClickShapeWidget::findSelectedObj(QPoint at) {
+    CustomObj *currentObj;
+    foreach(currentObj, placements) {
+        if (currentObj->rect->contains(at)) {
+            currentObj->selected = !currentObj->selected;
+            return currentObj;
+        }
+    }
+    return nullptr;
 }
 
 void ClickShapeWidget::increaseNewSize() {

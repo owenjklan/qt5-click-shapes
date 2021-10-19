@@ -5,10 +5,10 @@
 
 #include <QPen>
 #include <QBrush>
-
 #include <QWidget>
 #include <QPushButton>
 
+#include "CustomObj.h"
 
 #define RED "\033[33;1m"
 #define NORMAL "\033[0m"
@@ -37,8 +37,9 @@ private slots:
 private:
     void increaseNewSize();
     void decreaseNewSize();
+    CustomObj *findSelectedObj(QPoint);
 
-    QList<QRect *> placements;
+    QList<CustomObj *> placements;
 
     int newWidth = 96;
     int newHeight = 64;

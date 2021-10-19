@@ -13,7 +13,7 @@ find_package(Qt5 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(qt5_click_shapes main.cpp ClickShapeWidget.cpp ClickShapeWidget.h MainWindow.cpp MainWindow.h)
+add_executable(qt5_click_shapes main.cpp ClickShapeWidget.cpp ClickShapeWidget.h MainWindow.cpp MainWindow.h CustomObj.cpp CustomObj.h)
 target_link_libraries(qt5_click_shapes
         Qt5::Core
         Qt5::Gui
