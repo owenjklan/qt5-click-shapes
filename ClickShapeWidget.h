@@ -6,6 +6,7 @@
 #include <QPen>
 #include <QBrush>
 #include <QWidget>
+#include <QStack>
 #include <QPushButton>
 #include <QShortcut>
 
@@ -27,12 +28,14 @@ public:
     void addShape(QPoint at);
     void clearShapes();
     void paintEvent(QPaintEvent *event) override;
+    int redoCount();
 
 public slots:
     void selectAll(bool checked = false);
     void unselectAll(bool checked = false);
     void invertSelection(bool checked = false);
     void popPlacement(bool checked = false);
+    void addPlacementFromRedoList(bool checked = false);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -45,6 +48,7 @@ private:
     CustomObj *findSelectedObj(QPoint);
 
     QList<CustomObj *> placements;
+    QStack<CustomObj *> redoList;
 
     int newWidth = 96;
     int newHeight = 64;

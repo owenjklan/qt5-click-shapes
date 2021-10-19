@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QPainter>
 #include <QShortcut>
+#include <QStack>
 #include <QKeySequence>
 #include <QMouseEvent>
 #include <QVBoxLayout>
@@ -154,6 +155,10 @@ CustomObj * ClickShapeWidget::findSelectedObj(QPoint at) {
     return nullptr;
 }
 
+int ClickShapeWidget::redoCount() {
+    return redoList.size();
+}
+
 void ClickShapeWidget::increaseNewSize() {
     qint32 _width = newWidth << 1;
     qint32 _height = newHeight << 1;
@@ -215,10 +220,29 @@ void ClickShapeWidget::invertSelection(bool checked) {
     update();
 }
 
+#define MAX_REDOS       32
 void ClickShapeWidget::popPlacement(bool checked) {
     if (placements.length() > 0) {
         CustomObj *backObject = placements.takeLast();
-        delete backObject;
+        redoList.push(backObject);
+        if (redoList.size() > MAX_REDOS) {
+            qDebug() << "Dropping redo, too many in list";
+            CustomObj *deletedObject = redoList.takeFirst();
+            delete deletedObject;
+        }
+        qDebug() << "popPlacement():: redoList.size(): " << redoList.size();
+
         update();
     }
+}
+
+void ClickShapeWidget::addPlacementFromRedoList(bool checked) {
+    if (redoList.size() == 0) {
+        return;
+    }
+
+    CustomObj *redoObject = redoList.takeLast();
+    qDebug() << "addPlacementFromRedoList():: redoList.size(): " << redoList.size();
+    placements.append(redoObject);
+    update();
 }

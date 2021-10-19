@@ -21,6 +21,8 @@ protected:
 
 private slots:
     void clearAllObjects();
+    void undoPlacement(bool checked = false);
+    void redoPlacement(bool checked = false);
 
 private:
     void setupUiAndSignals(QWidget *parent);
@@ -37,6 +39,7 @@ private:
 
     // Menu actions
     QAction *removeLastPlacedAction;
+    QAction *redoPlacementAction;
     QAction *selectAllAction;
     QAction *unselectAllAction;
     QAction *invertSelectionAction;
