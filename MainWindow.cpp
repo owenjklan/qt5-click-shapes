@@ -51,6 +51,9 @@ void MainWindow::setupMenusAndActions() {
     selectMenu->addAction(unselectAllAction);
     selectMenu->addAction(invertSelectionAction);
 
+    menuBar()->addSeparator();
+    QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
+
     connect(selectAllAction, SIGNAL(triggered(bool)),
             canvas, SLOT(selectAll(bool)));
     connect(unselectAllAction, SIGNAL(triggered(bool)),
@@ -69,19 +72,20 @@ void MainWindow::setupMenusAndActions() {
 
 void MainWindow::setupModeSelectGroup() {
     modeSelectGroup = new QGroupBox(tr("Mode Select"));
-    modeSelectGroup->setCheckable(true);
-    connectModeButton = new QPushButton("Connect");
+    connectModeButton = new QPushButton("C&onnect");
+    connectModeButton->setObjectName("connectModeButton");
     connectModeButton->setToolTip("Change to 'Connect' mode");
     connectModeButton->setToolTipDuration(2000);
     connectModeButton->setCheckable(true);
-    connectModeButton->setChecked(true);
+    connectModeButton->setChecked(false);
     connectModeButton->setMaximumWidth(75);
 
-    placeModeButton = new QPushButton("Place");
+    placeModeButton = new QPushButton("&Place");
+    placeModeButton->setObjectName("placeModeButton");
     placeModeButton->setToolTip("Change to 'Place' mode");
     placeModeButton->setToolTipDuration(2000);
     placeModeButton->setCheckable(true);
-    placeModeButton->setChecked(false);
+    placeModeButton->setChecked(true);
     placeModeButton->setMaximumWidth(75);
 
     QHBoxLayout *modeButtonsLayout = new QHBoxLayout();

@@ -14,3 +14,11 @@ ClickShapeWidget {
 QMenuBar, QMenu {
     font-family: "monospace";
 }
+
+/*QGroupBox {*/
+/*    background-color: #ded697;*/
+/*}*/
+
+#placeModeButton {
+    background-color: #22dd11;
+}
