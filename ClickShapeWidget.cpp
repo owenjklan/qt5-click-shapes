@@ -42,6 +42,16 @@ void ClickShapeWidget::addShape(QPoint at) {
     CustomObj *newObj = new CustomObj(new QString("Foobar"), objBounds);
     placements.append(newObj);
 }
+
+void ClickShapeWidget::clearShapes() {
+    CustomObj *currentObj;
+
+    foreach(currentObj, placements) {
+        placements.removeOne(currentObj);
+        delete currentObj;
+    }
+    qDebug() << "All objects cleared.";
+}
 // END OF Points list manipulations
 
 void ClickShapeWidget::paintEvent(QPaintEvent *event) {

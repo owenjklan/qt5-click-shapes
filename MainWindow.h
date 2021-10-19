@@ -19,12 +19,12 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
-    void refreshRequested();
+    void clearAllObjects();
 
 private:
     void setupUiAndSignals(QWidget *parent);
     QStyle *stylesheet;
-    QPushButton *refreshButton;
+    QPushButton *clearButton;
     ClickShapeWidget *canvas;
 };
 #endif //QT5_CLICK_SHAPES_MAINWINDOW_H

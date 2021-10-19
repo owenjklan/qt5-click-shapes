@@ -25,6 +25,7 @@ class ClickShapeWidget : public QWidget {
 public:
     explicit ClickShapeWidget(QWidget *parent = nullptr);
     void addShape(QPoint at);
+    void clearShapes();
 
     void paintEvent(QPaintEvent *event) override;
 

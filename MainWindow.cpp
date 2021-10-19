@@ -18,20 +18,20 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::setupUiAndSignals(QWidget *parent) {
-    refreshButton = new QPushButton("&Refresh");
-    refreshButton->setMaximumWidth(150);
+    clearButton = new QPushButton("&Clear");
+    clearButton->setMaximumWidth(150);
     canvas = new ClickShapeWidget(parent);
 
     QVBoxLayout *layout = new QVBoxLayout();
 
-    layout->addWidget(refreshButton);
+    layout->addWidget(clearButton);
     layout->addWidget(canvas);
 
     setLayout(layout);
     setWindowTitle("Qt5 Click Shapes");
 
-    connect(refreshButton, SIGNAL(released()),
-            this, SLOT(refreshRequested()));
+    connect(clearButton, SIGNAL(released()),
+            this, SLOT(clearAllObjects()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -42,6 +42,8 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     // event->ignore();
 }
 
-void MainWindow::refreshRequested() {
+void MainWindow::clearAllObjects() {
     qDebug() << "Refresh button has been pressed.";
+    canvas->clearShapes();
+    canvas->update();
 }
