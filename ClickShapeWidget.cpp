@@ -7,6 +7,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QVBoxLayout>
+#include <QApplication>
 
 #include "ClickShapeWidget.h"
 #include "CustomObj.h"
@@ -87,8 +88,22 @@ void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
 
     switch (event->button()) {
         case Qt::LeftButton: {
-            qDebug() << "Adding point  @ " << outputStr;
-            addShape(QPoint(event->x(), event->y()));
+            if (QApplication::queryKeyboardModifiers() == Qt::CTRL) {
+                CustomObj *selectedObj = findSelectedObj(event->pos());
+                if (selectedObj == nullptr) {
+                    break;
+                }
+                QString debugMessage = QString("Selected Rect @ %1, %2 (%3x%4)")\
+                .arg(selectedObj->rect->x())\
+                .arg(selectedObj->rect->y())\
+                .arg(selectedObj->rect->width())\
+                .arg(selectedObj->rect->height());
+                qDebug() << debugMessage;
+
+            } else { // Add new object
+                qDebug() << "Adding point  @ " << outputStr;
+                addShape(QPoint(event->x(), event->y()));
+            }
             break;
         }
         case Qt::MidButton: {
@@ -96,16 +111,6 @@ void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
             break;
         }
         case Qt::RightButton: {
-            CustomObj *selectedObj = findSelectedObj(event->pos());
-            if (selectedObj == nullptr) {
-                break;
-            }
-            QString debugMessage = QString("Selected Rect @ %1, %2 (%3x%4)")\
-                .arg(selectedObj->rect->x())\
-                .arg(selectedObj->rect->y())\
-                .arg(selectedObj->rect->width())\
-                .arg(selectedObj->rect->height());
-            qDebug() << debugMessage;
             break;
         }
         case Qt::XButton1: {
