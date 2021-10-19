@@ -26,17 +26,17 @@ public:
     explicit ClickShapeWidget(QWidget *parent = nullptr);
     void addShape(QPoint at);
     void clearShapes();
-
     void paintEvent(QPaintEvent *event) override;
+
+public slots:
+    void selectAll(bool checked = false);
+    void unselectAll(bool checked = false);
+    void invertSelection(bool checked = false);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-
-private slots:
-    void selectAll();
-    void unselectAll();
 
 private:
     void increaseNewSize();
@@ -47,10 +47,5 @@ private:
 
     int newWidth = 96;
     int newHeight = 64;
-
-    QAction *selectAllAction;
-    QAction *unselectAllAction;
-    QShortcut *selectAllShortcut;
-    QShortcut *unselectAllShortcut;
 };
 #endif //QT5_CLICK_SHAPES_CLICKSHAPEWIDGET_H

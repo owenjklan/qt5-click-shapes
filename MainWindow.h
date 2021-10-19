@@ -24,8 +24,20 @@ private slots:
 
 private:
     void setupUiAndSignals(QWidget *parent);
+    void setupMenusAndActions();
+
     QWidget *containerWidget;
     QPushButton *clearButton;
     ClickShapeWidget *canvas;
+
+    // Menu objects
+    QMenu *fileMenu;
+    QMenu *selectMenu;
+
+    // Menu actions
+    QAction *selectAllAction;
+    QAction *unselectAllAction;
+    QAction *invertSelectionAction;
+
 };
 #endif //QT5_CLICK_SHAPES_MAINWINDOW_H

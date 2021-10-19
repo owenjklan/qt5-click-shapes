@@ -20,20 +20,6 @@ ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
 {
     setMinimumWidth(640);
     setMinimumHeight(480);
-
-    selectAllShortcut = new QShortcut(
-            QKeySequence(Qt::CTRL + Qt::Key_A),
-            this
-    );
-    unselectAllShortcut = new QShortcut(
-            QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_A),
-            this
-    );
-
-    connect(selectAllShortcut, SIGNAL(activated()),
-            this, SLOT(selectAll()));
-    connect(unselectAllShortcut, SIGNAL(activated()),
-            this, SLOT(unselectAll()));
 }
 
 // Points list manipulations
@@ -204,7 +190,8 @@ void ClickShapeWidget::decreaseNewSize() {
     qDebug() << updateMessage;
 }
 
-void ClickShapeWidget::selectAll() {
+// public slots
+void ClickShapeWidget::selectAll(bool a) {
     CustomObj *currentObj;
     foreach(currentObj, placements) {
         currentObj->selected = true;
@@ -212,10 +199,18 @@ void ClickShapeWidget::selectAll() {
     update();
 }
 
-void ClickShapeWidget::unselectAll() {
+void ClickShapeWidget::unselectAll(bool a) {
     CustomObj *currentObj;
     foreach(currentObj, placements) {
         currentObj->selected = false;
+    }
+    update();
+}
+
+void ClickShapeWidget::invertSelection(bool a) {
+    CustomObj *currentObj;
+    foreach(currentObj, placements) {
+        currentObj->selected = !currentObj->selected;
     }
     update();
 }
