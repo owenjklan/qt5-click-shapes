@@ -32,7 +32,14 @@ void MainWindow::setupMenusAndActions() {
     invertSelectionAction = new QAction(tr("&Invert"), this);
     invertSelectionAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
 
+    removeLastPlacedAction = new QAction(tr("Undo Last Placement"));
+    removeLastPlacedAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+
     fileMenu = menuBar()->addMenu(tr("&File"));
+
+    editMenu = menuBar()->addMenu(tr("&Edit"));
+    editMenu->addAction(removeLastPlacedAction);
+
     selectMenu = menuBar()->addMenu(tr("&Select"));
     selectMenu->addAction(selectAllAction);
     selectMenu->addAction(unselectAllAction);
@@ -44,6 +51,8 @@ void MainWindow::setupMenusAndActions() {
             canvas, SLOT(unselectAll(bool)));
     connect(invertSelectionAction, SIGNAL(triggered(bool)),
             canvas, SLOT(invertSelection(bool)));
+    connect(removeLastPlacedAction, SIGNAL(triggered(bool)),
+            canvas, SLOT(popPlacement(bool)));
 }
 
 void MainWindow::setupUiAndSignals(QWidget *parent) {

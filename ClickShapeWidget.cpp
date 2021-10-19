@@ -191,7 +191,7 @@ void ClickShapeWidget::decreaseNewSize() {
 }
 
 // public slots
-void ClickShapeWidget::selectAll(bool a) {
+void ClickShapeWidget::selectAll(bool checked) {
     CustomObj *currentObj;
     foreach(currentObj, placements) {
         currentObj->selected = true;
@@ -199,7 +199,7 @@ void ClickShapeWidget::selectAll(bool a) {
     update();
 }
 
-void ClickShapeWidget::unselectAll(bool a) {
+void ClickShapeWidget::unselectAll(bool checked) {
     CustomObj *currentObj;
     foreach(currentObj, placements) {
         currentObj->selected = false;
@@ -207,10 +207,18 @@ void ClickShapeWidget::unselectAll(bool a) {
     update();
 }
 
-void ClickShapeWidget::invertSelection(bool a) {
+void ClickShapeWidget::invertSelection(bool checked) {
     CustomObj *currentObj;
     foreach(currentObj, placements) {
         currentObj->selected = !currentObj->selected;
     }
     update();
+}
+
+void ClickShapeWidget::popPlacement(bool checked) {
+    if (placements.length() > 0) {
+        CustomObj *backObject = placements.takeLast();
+        delete backObject;
+        update();
+    }
 }

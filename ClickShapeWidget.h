@@ -32,6 +32,7 @@ public slots:
     void selectAll(bool checked = false);
     void unselectAll(bool checked = false);
     void invertSelection(bool checked = false);
+    void popPlacement(bool checked = false);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
