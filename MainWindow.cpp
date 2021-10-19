@@ -8,7 +8,7 @@
 #include "ClickShapeWidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-        QWidget(parent) {
+        QMainWindow(parent) {
     setupUiAndSignals(parent);
 
     QFile file("../style.css");
@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::setupUiAndSignals(QWidget *parent) {
+    containerWidget = new QWidget(parent);
     clearButton = new QPushButton("&Clear");
     clearButton->setMaximumWidth(150);
     canvas = new ClickShapeWidget(parent);
@@ -26,8 +27,8 @@ void MainWindow::setupUiAndSignals(QWidget *parent) {
 
     layout->addWidget(clearButton);
     layout->addWidget(canvas);
-
-    setLayout(layout);
+    containerWidget->setLayout(layout);
+    setCentralWidget(containerWidget);
     setWindowTitle("Qt5 Click Shapes");
 
     connect(clearButton, SIGNAL(released()),

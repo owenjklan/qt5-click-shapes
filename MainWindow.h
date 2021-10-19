@@ -6,10 +6,11 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QStyle>
+#include <QMainWindow>
 
 #include "ClickShapeWidget.h"
 
-class MainWindow : public QWidget {
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -23,7 +24,7 @@ private slots:
 
 private:
     void setupUiAndSignals(QWidget *parent);
-    QStyle *stylesheet;
+    QWidget *containerWidget;
     QPushButton *clearButton;
     ClickShapeWidget *canvas;
 };
