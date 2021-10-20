@@ -8,10 +8,15 @@
 
 #include <QString>
 #include <QRect>
+#include <QPainter>
 
 class CustomObj {
 public:
     CustomObj(QString *name, QRect *bounds);
+
+    void draw(QPainter *painter);
+    void drawCaptionText(QPainter *painter);
+
     bool selected;
     QString *name;
     QRect *rect;

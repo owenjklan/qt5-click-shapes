@@ -50,23 +50,14 @@ void ClickShapeWidget::paintEvent(QPaintEvent *event) {
 
     painter.setBrush(Qt::SolidPattern);
     QPen pen;
-
-    pen.setColor(Qt::green);
-    pen.setWidth(1);
-
-    painter.setPen(pen);
+//
+//    pen.setColor(Qt::green);
+//    pen.setWidth(1);
+//    painter.setPen(pen);
 
     CustomObj *currentObj;
     foreach(currentObj, placements) {
-        if (currentObj->selected) {
-            pen.setColor(Qt::red);
-            pen.setWidth(2);
-        } else {
-            pen.setColor(Qt::green);
-            pen.setWidth(1);
-        }
-        painter.setPen(pen);
-        painter.drawRect(*currentObj->rect);
+        currentObj->draw(&painter);
     }
 }
 
