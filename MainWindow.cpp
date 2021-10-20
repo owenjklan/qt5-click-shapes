@@ -79,7 +79,7 @@ void MainWindow::setupMenusAndActions() {
 
 void MainWindow::setupModeSelectGroup() {
     modeSelectGroup = new QGroupBox(tr("Mode Select"));
-    modeSelectGroup->setMaximumHeight(100);
+    modeSelectGroup->setMaximumHeight(80);
     connectModeButton = new QPushButton("C&onnect");
     connectModeButton->setObjectName("connectModeButton");
     connectModeButton->setToolTip("Change to 'Connect' mode");
@@ -109,7 +109,7 @@ void MainWindow::setupModeSelectGroup() {
 
 void MainWindow::setupObjectSelectGroup(QWidget *parent = nullptr) {
     objectSelectGroup = new QGroupBox(tr("Object Select"));
-    objectSelectGroup->setMaximumHeight(100);
+    objectSelectGroup->setMaximumHeight(80);
     objectSelectorCombo = new QComboBox(parent);
     objectSelectorCombo->setMinimumWidth(150);
     objectSelectorCombo->setMaximumWidth(250);
