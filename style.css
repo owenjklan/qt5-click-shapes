@@ -11,6 +11,10 @@ ClickShapeWidget {
     border: 1px solid black;
 }
 
+ClickShapeWidget:hover {
+    background-color: #ada586;
+}
+
 QMenuBar, QMenu {
     font-family: "monospace";
 }
