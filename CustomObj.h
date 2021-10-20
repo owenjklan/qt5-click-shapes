@@ -12,7 +12,7 @@
 
 class CustomObj {
 public:
-    CustomObj(QString *name, QRect *bounds);
+    CustomObj(QString name, QRect *bounds);
 
     void draw(QPainter *painter);
     void drawCaptionText(QPainter *painter);

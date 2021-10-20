@@ -31,11 +31,12 @@ public:
     int redoCount();
     void enableConnectMode();
     void enablePlaceMode();
-
 public slots:
+
     void selectAll(bool checked = false);
     void unselectAll(bool checked = false);
     void invertSelection(bool checked = false);
+    void setCurrentName(QString newName);
     void popPlacement(bool checked = false);
     void addPlacementFromRedoList(bool checked = false);
 
@@ -49,6 +50,7 @@ private:
     void decreaseNewSize();
     CustomObj *findSelectedObj(QPoint);
 
+    QString currentName;
     QList<CustomObj *> placements;
     QStack<CustomObj *> redoList;
 

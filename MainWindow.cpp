@@ -6,6 +6,9 @@
 #include <QMenuBar>
 #include <QDebug>
 #include <QVBoxLayout>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #include "MainWindow.h"
 #include "ClickShapeWidget.h"
@@ -16,11 +19,15 @@ MainWindow::MainWindow(QWidget *parent) :
     setupUiAndSignals(parent);
     setupMenusAndActions();
 
+    // Load definitions from JSON
+    // "object" definitions
+    loadObjectDefinitionsJSON();
+    populateObjectSelector();
+    // Load stylesheet
     QFile file("../style.css");
     file.open(QFile::ReadOnly);
     QString styleString = file.readAll();
     setStyleSheet(styleString);
-
 }
 
 void MainWindow::setupMenusAndActions() {
@@ -99,6 +106,20 @@ void MainWindow::setupModeSelectGroup() {
             this, SLOT(placeModeChecked(bool)));
 }
 
+void MainWindow::setupObjectSelectGroup(QWidget *parent = nullptr) {
+    objectSelectGroup = new QGroupBox(tr("Object Select"));
+    objectSelectorCombo = new QComboBox(parent);
+    objectSelectorCombo->setMinimumWidth(150);
+    objectSelectorCombo->setMaximumWidth(250);
+
+    QHBoxLayout *objSelectLayout = new QHBoxLayout();
+    objSelectLayout->addWidget(objectSelectorCombo);
+    objectSelectGroup->setLayout(objSelectLayout);
+
+    connect(objectSelectorCombo, SIGNAL(currentTextChanged(const QString &)),
+            canvas, SLOT(setCurrentName(QString)));
+}
+
 void MainWindow::setupUiAndSignals(QWidget *parent) {
     containerWidget = new QWidget(parent);
     clearButton = new QPushButton("&Clear");
@@ -106,12 +127,14 @@ void MainWindow::setupUiAndSignals(QWidget *parent) {
     canvas = new ClickShapeWidget(parent);
 
     setupModeSelectGroup();
+    setupObjectSelectGroup();
 
     QVBoxLayout *vertLayout = new QVBoxLayout();
     QHBoxLayout *menuHLayout = new QHBoxLayout();
 
     menuHLayout->addWidget(clearButton);
     menuHLayout->addStretch();
+    menuHLayout->addWidget(objectSelectGroup );
     menuHLayout->addWidget(modeSelectGroup);
     vertLayout->addLayout(menuHLayout);
     vertLayout->addWidget(canvas);
@@ -121,6 +144,33 @@ void MainWindow::setupUiAndSignals(QWidget *parent) {
 
     connect(clearButton, SIGNAL(released()),
             this, SLOT(clearAllObjects()));
+}
+
+void MainWindow::populateObjectSelector() {
+    QString newName;
+    foreach(newName, objectNames) {
+        objectSelectorCombo->addItem(newName);
+    }
+}
+
+void MainWindow::loadObjectDefinitionsJSON() {
+    QFile inputJsonFile("../objects.json");
+    inputJsonFile.open(QIODevice::ReadOnly|QIODevice::Text);
+    QByteArray data = inputJsonFile.readAll();
+    inputJsonFile.close();
+
+    QJsonParseError errorPtr;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(data, &errorPtr);
+    if (jsonDoc.isNull()) {
+        qDebug() << "JSON Parse failed!";
+    }
+    QJsonObject jsonRootObj = jsonDoc.object();
+    QVector<CustomObj> objectDefs;
+    QJsonArray objsArray = jsonRootObj.value("objects").toArray();
+    qDebug() << objsArray.size() << " object definitions loaded";
+    foreach(const QJsonValue &val, objsArray) {
+        objectNames.append(val.toObject().value("name").toString());
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {

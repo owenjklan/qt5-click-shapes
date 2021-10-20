@@ -5,8 +5,6 @@
 #include <QDebug>
 #include <QWidget>
 #include <QPainter>
-#include <QShortcut>
-#include <QStack>
 #include <QKeySequence>
 #include <QMouseEvent>
 #include <QVBoxLayout>
@@ -26,8 +24,12 @@ ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
 // Points list manipulations
 void ClickShapeWidget::addShape(QPoint at) {
     QRect *objBounds = new QRect(at.x(), at.y(), newWidth, newHeight);
-    CustomObj *newObj = new CustomObj(new QString("Foobar"), objBounds);
+    CustomObj *newObj = new CustomObj(currentName, objBounds);
     placements.append(newObj);
+}
+
+void ClickShapeWidget::setCurrentName(QString newName) {
+    currentName = newName;
 }
 
 void ClickShapeWidget::clearShapes() {

@@ -8,6 +8,7 @@
 #include <QStyle>
 #include <QMainWindow>
 #include <QGroupBox>
+#include <QComboBox>
 
 #include "ClickShapeWidget.h"
 
@@ -31,14 +32,22 @@ private:
     void setupUiAndSignals(QWidget *parent);
     void setupMenusAndActions();
     void setupModeSelectGroup();
+    void setupObjectSelectGroup(QWidget *parent);
+    void populateObjectSelector();
+    void loadObjectDefinitionsJSON();
 
     QWidget *containerWidget;
     QPushButton *clearButton;
     ClickShapeWidget *canvas;
+
     QGroupBox *modeSelectGroup;
     QPushButton *placeModeButton;
     QPushButton *connectModeButton;
 
+    QGroupBox *objectSelectGroup;
+    QComboBox *objectSelectorCombo;
+
+    QVector<QString> objectNames;
 
     // Menu objects
     QMenu *fileMenu;

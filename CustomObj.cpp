@@ -4,10 +4,10 @@
 
 #include "CustomObj.h"
 
-CustomObj::CustomObj(QString *objName, QRect *objRect) {
+CustomObj::CustomObj(QString objName, QRect *objRect) {
     selected = false;
-    name = objName;
-    rect = objRect;
+    name = new QString(objName);
+    rect = new QRect(*objRect);
 }
 
 void CustomObj::draw(QPainter *painter) {
@@ -31,9 +31,7 @@ void CustomObj::drawCaptionText(QPainter *painter) {
     QPen pen;
 
     pen.setColor(Qt::white);
-//    pen.setWidth(3);
     painter->setPen(pen);
-
     QString caption = QString("%1x%2")\
                         .arg(rect->width())\
                         .arg(rect->height());
