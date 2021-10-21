@@ -94,7 +94,6 @@ void ClickShapeWidget::mousePressEvent(QMouseEvent *event) {
 void ClickShapeWidget::mouseMoveEvent(QMouseEvent *event) {
     placeCursorPos.setX(event->x());
     placeCursorPos.setY(event->y());
-    qDebug() << placeCursorPos;
 }
 
 void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {

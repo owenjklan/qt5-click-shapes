@@ -80,13 +80,13 @@ void MainWindow::setupMenusAndActions() {
 void MainWindow::setupModeSelectGroup() {
     modeSelectGroup = new QGroupBox(tr("Mode Select"));
     modeSelectGroup->setMaximumHeight(80);
-    connectModeButton = new QPushButton("C&onnect");
-    connectModeButton->setObjectName("connectModeButton");
-    connectModeButton->setToolTip("Change to 'Connect' mode");
-    connectModeButton->setToolTipDuration(2000);
-    connectModeButton->setCheckable(true);
-    connectModeButton->setChecked(false);
-    connectModeButton->setMaximumWidth(75);
+    selectModeButton = new QPushButton("&Select");
+    selectModeButton->setObjectName("selectModeButton");
+    selectModeButton->setToolTip("Change to 'Connect' mode");
+    selectModeButton->setToolTipDuration(2000);
+    selectModeButton->setCheckable(true);
+    selectModeButton->setChecked(false);
+    selectModeButton->setMaximumWidth(75);
 
     placeModeButton = new QPushButton("&Place");
     placeModeButton->setObjectName("placeModeButton");
@@ -97,11 +97,11 @@ void MainWindow::setupModeSelectGroup() {
     placeModeButton->setMaximumWidth(75);
 
     QHBoxLayout *modeButtonsLayout = new QHBoxLayout();
-    modeButtonsLayout->addWidget(connectModeButton);
+    modeButtonsLayout->addWidget(selectModeButton);
     modeButtonsLayout->addWidget(placeModeButton);
     modeSelectGroup->setLayout(modeButtonsLayout);
 
-    connect(connectModeButton, SIGNAL(toggled(bool)),
+    connect(selectModeButton, SIGNAL(toggled(bool)),
             this, SLOT(connectModeChecked(bool)));
     connect(placeModeButton, SIGNAL(toggled(bool)),
             this, SLOT(placeModeChecked(bool)));
@@ -219,7 +219,7 @@ void MainWindow::connectModeChecked(bool checked) {
 
 void MainWindow::placeModeChecked(bool checked) {
 //    qDebug() << "placeModeChecked(checked=" << checked << ")";
-    connectModeButton->setChecked(!checked);
+    selectModeButton->setChecked(!checked);
     if (checked == true) {
         canvas->enablePlaceMode();
 //        canvas->setCursorObject(objectSelectorCombo->currentText());

@@ -26,3 +26,7 @@ QMenuBar, QMenu {
 #placeModeButton {
     background-color: #22dd11;
 }
+
+#selectModeButton {
+    background-color: #1122dd;
+}

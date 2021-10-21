@@ -42,7 +42,7 @@ private:
 
     QGroupBox *modeSelectGroup;
     QPushButton *placeModeButton;
-    QPushButton *connectModeButton;
+    QPushButton *selectModeButton;
 
     QGroupBox *objectSelectGroup;
     QComboBox *objectSelectorCombo;
