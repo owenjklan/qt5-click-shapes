@@ -17,6 +17,7 @@
 ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
     QWidget(parent)
 {
+    painter = new QPainter(this);
     setMinimumWidth(640);
     setMinimumHeight(480);
 }
@@ -49,17 +50,19 @@ void ClickShapeWidget::paintEvent(QPaintEvent *event) {
 
     QPainter painter(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
-
     painter.setBrush(Qt::SolidPattern);
-    QPen pen;
-//
-//    pen.setColor(Qt::green);
-//    pen.setWidth(1);
-//    painter.setPen(pen);
 
     CustomObj *currentObj;
     foreach(currentObj, placements) {
         currentObj->draw(&painter);
+    }
+
+    if (placeMode == true) {
+        QRect *rect = new QRect(placeCursorPos.x(), placeCursorPos.y(), newWidth, newHeight);
+        CustomObj cursorObject(currentName, rect);
+//        painter.setBrush(Qt::SolidPattern);
+        cursorObject.draw(&painter);
+        update();
     }
 }
 
@@ -89,7 +92,9 @@ void ClickShapeWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 void ClickShapeWidget::mouseMoveEvent(QMouseEvent *event) {
-
+    placeCursorPos.setX(event->x());
+    placeCursorPos.setY(event->y());
+    qDebug() << placeCursorPos;
 }
 
 void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
@@ -97,7 +102,7 @@ void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
 
     switch (event->button()) {
         case Qt::LeftButton: {
-            if (QApplication::queryKeyboardModifiers() == Qt::CTRL) {
+            if (selectMode == true) {
                 CustomObj *selectedObj = findSelectedObj(event->pos());
                 if (selectedObj == nullptr) {
                     break;
@@ -241,9 +246,15 @@ void ClickShapeWidget::addPlacementFromRedoList(bool checked) {
 }
 
 void ClickShapeWidget::enableConnectMode() {
+    placeMode = false;
+    selectMode = true;
+    setMouseTracking(false);
     qDebug() << "Connect mode enabeld";
 }
 
 void ClickShapeWidget::enablePlaceMode() {
+    placeMode = true;
+    selectMode = false;
+    setMouseTracking(true);
     qDebug() << "Place mode enabled";
 }

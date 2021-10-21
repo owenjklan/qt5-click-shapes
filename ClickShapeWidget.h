@@ -4,6 +4,7 @@
 #define QT5_CLICK_SHAPES_CLICKSHAPEWIDGET_H
 
 #include <QPen>
+#include <QPainter>
 #include <QBrush>
 #include <QWidget>
 #include <QStack>
@@ -31,8 +32,8 @@ public:
     int redoCount();
     void enableConnectMode();
     void enablePlaceMode();
-public slots:
 
+public slots:
     void selectAll(bool checked = false);
     void unselectAll(bool checked = false);
     void invertSelection(bool checked = false);
@@ -46,18 +47,17 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
+    bool placeMode;
+    bool selectMode;
     void increaseNewSize();
     void decreaseNewSize();
     CustomObj *findSelectedObj(QPoint);
 
+    QPainter *painter;
     QString currentName;
     QList<CustomObj *> placements;
     QStack<CustomObj *> redoList;
-
-#define CONNECT_MODE 0
-#define PLACE_MODE 1
-    int mode = CONNECT_MODE;
-
+    QPoint placeCursorPos;
     int newWidth = 96;
     int newHeight = 64;
 };

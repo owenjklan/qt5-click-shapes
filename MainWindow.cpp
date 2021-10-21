@@ -131,6 +131,8 @@ void MainWindow::setupUiAndSignals(QWidget *parent) {
     setupModeSelectGroup();
     setupObjectSelectGroup();
 
+    canvas->enablePlaceMode();
+
     QVBoxLayout *vertLayout = new QVBoxLayout();
     QHBoxLayout *menuHLayout = new QHBoxLayout();
 
@@ -220,5 +222,6 @@ void MainWindow::placeModeChecked(bool checked) {
     connectModeButton->setChecked(!checked);
     if (checked == true) {
         canvas->enablePlaceMode();
+//        canvas->setCursorObject(objectSelectorCombo->currentText());
     }
 }
