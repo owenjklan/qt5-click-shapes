@@ -6,8 +6,13 @@ QPushButton {
     background-color: red;
 }
 
+/*ClickShapeWidget {*/
+/*    background-color: #beb697;*/
+/*    border: 1px solid black;*/
+/*}*/
+
 ClickShapeWidget {
-    background-color: #beb697;
+    background: url(../images/circuit_board.jpg) stretch stretch center center;
     border: 1px solid black;
 }
 

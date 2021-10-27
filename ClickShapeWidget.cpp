@@ -219,6 +219,7 @@ void ClickShapeWidget::invertSelection(bool checked) {
     foreach(currentObj, placements) {
         currentObj->selected = !currentObj->selected;
     }
+    QSound::play("../sfx/swap.wav");
     update();
 }
 
