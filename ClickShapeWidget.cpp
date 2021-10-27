@@ -11,6 +11,9 @@
 #include <QApplication>
 #include <QStyleOption>
 
+//#include <QtMultimedia/QMediaPlayer>
+#include <QtMultimedia/QSound>
+
 #include "ClickShapeWidget.h"
 #include "CustomObj.h"
 
@@ -40,6 +43,7 @@ void ClickShapeWidget::clearShapes() {
         placements.removeOne(currentObj);
         delete currentObj;
     }
+    QSound::play("../sfx/clear.wav");
     qDebug() << "All objects cleared.";
 }
 // END OF Points list manipulations
@@ -112,10 +116,11 @@ void ClickShapeWidget::mouseReleaseEvent(QMouseEvent *event) {
                 .arg(selectedObj->rect->width())\
                 .arg(selectedObj->rect->height());
                 qDebug() << debugMessage;
-
+                QSound::play("../sfx/select.wav");
             } else { // Add new object
                 qDebug() << "Adding point  @ " << outputStr;
                 addShape(QPoint(event->x(), event->y()));
+                QSound::play("../sfx/place.wav");
             }
             break;
         }

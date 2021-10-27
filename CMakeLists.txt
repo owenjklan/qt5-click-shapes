@@ -10,6 +10,7 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5 COMPONENTS
         Core
         Gui
+        Multimedia
         Widgets
         REQUIRED)
 
@@ -17,6 +18,7 @@ add_executable(qt5_click_shapes main.cpp ClickShapeWidget.cpp ClickShapeWidget.h
 target_link_libraries(qt5_click_shapes
         Qt5::Core
         Qt5::Gui
+        Qt5::Multimedia
         Qt5::Widgets
         )
 
