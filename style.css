@@ -12,8 +12,9 @@ QPushButton {
 /*}*/
 
 ClickShapeWidget {
-    background: url(../images/circuit_board.jpg) stretch stretch center center;
+    background: url(../images/pool_tile.jpg) stretch stretch center center;
     border: 1px solid black;
+    border-radius: 5px;
 }
 
 ClickShapeWidget:hover {

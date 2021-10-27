@@ -12,7 +12,7 @@
 
 class CustomObj {
 public:
-    CustomObj(QString name, QRect *bounds);
+    CustomObj(QString name, QRect *bounds, QString imageFilename);
 
     void draw(QPainter *painter);
     void drawCaptionText(QPainter *painter);
@@ -20,6 +20,8 @@ public:
     bool selected;
     QString *name;
     QRect *rect;
+private:
+    QPixmap pixmap;
 };
 
 

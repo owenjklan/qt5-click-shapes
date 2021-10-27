@@ -4,10 +4,11 @@
 
 #include "CustomObj.h"
 
-CustomObj::CustomObj(QString objName, QRect *objRect) {
+CustomObj::CustomObj(QString objName, QRect *objRect, QString imageFilename) {
     selected = false;
     name = new QString(objName);
     rect = new QRect(*objRect);
+    pixmap = QPixmap::fromImage(QImage(imageFilename));
 }
 
 void CustomObj::draw(QPainter *painter) {
@@ -21,7 +22,8 @@ void CustomObj::draw(QPainter *painter) {
         pen.setWidth(1);
     }
     painter->setPen(pen);
-    painter->drawRect(*rect);
+//    painter->drawRect(*rect);
+    painter->drawPixmap(*rect, pixmap);
     pen.setColor(Qt::white);
     drawCaptionText(painter);
 }

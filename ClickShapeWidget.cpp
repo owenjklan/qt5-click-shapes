@@ -28,7 +28,7 @@ ClickShapeWidget::ClickShapeWidget(QWidget *parent) :
 // Points list manipulations
 void ClickShapeWidget::addShape(QPoint at) {
     QRect *objBounds = new QRect(at.x(), at.y(), newWidth, newHeight);
-    CustomObj *newObj = new CustomObj(currentName, objBounds);
+    CustomObj *newObj = new CustomObj(currentName, objBounds, "../images/sprite1.png");
     placements.append(newObj);
 }
 
@@ -63,7 +63,7 @@ void ClickShapeWidget::paintEvent(QPaintEvent *event) {
 
     if (placeMode == true) {
         QRect *rect = new QRect(placeCursorPos.x(), placeCursorPos.y(), newWidth, newHeight);
-        CustomObj cursorObject(currentName, rect);
+        CustomObj cursorObject(currentName, rect, "../images/sprite1.png");
 //        painter.setBrush(Qt::SolidPattern);
         cursorObject.draw(&painter);
         update();
