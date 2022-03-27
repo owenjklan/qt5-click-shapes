@@ -1,12 +1,44 @@
 {
     "objects": [
         {
-            "name": "Example Object",
-            "image": "../images/obj1.png"
+            "name": "Armor",
+            "image": "../images/rpg/armor01.png"
         },
         {
-            "name": "FooBar Widget(TM)",
-            "image": "../images/obj2.png"
+            "name": "Nice Axe",
+            "image": "../images/rpg/axe01.png"
+        },
+        {
+            "name": "Empty Book",
+            "image": "../images/rpg/book01.png"
+        },
+        {
+            "name": "Enchanted Book",
+            "image": "../images/rpg/book02.png"
+        },
+        {
+            "name": "Bow",
+            "image": "../images/rpg/bow01.png"
+        },
+        {
+            "name": "Fireplace",
+            "image": "../images/rpg/fireplace.png"
+        },
+        {
+            "name": "Flail",
+            "image": "../images/rpg/flail01.png"
+        },
+        {
+            "name": "Plain Shield",
+            "image": "../images/rpg/shield01.png"
+        },
+        {
+            "name": "Ornate Shield",
+            "image": "../images/rpg/shield02.png"
+        },
+        {
+            "name": "Long Sword",
+            "image": "../images/rpg/sword01.png"
         }
     ]
 }
